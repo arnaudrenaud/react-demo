@@ -1,0 +1,17 @@
+
+
+.Button-group {
+  display: flex;
+  gap: 5px;
+}
+
+.Count-too-high {
+  color: orange
+}
+
+.Warning-message {
+  background: lightyellow;
+  border: 1px solid orange;
+  border-radius: 4px;
+  padding: 8px;
+}
