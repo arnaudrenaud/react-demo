@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import PersonCard from "../PersonCard/PersonCard";
+import "./NameGenerator.css";
 
 const NameGenerator = () => {
   const [persons, setPersons] = useState([]);
@@ -11,28 +13,38 @@ const NameGenerator = () => {
     setPersons(persons.concat([newPerson]));
   };
 
+  const deletePerson = (id) => {
+    setPersons(persons.filter((person) => person.login.uuid !== id));
+  };
+
   return (
     <>
       <h1>Générateur de noms</h1>
+      <fieldset>
+        <label>
+          <input type="radio" name="display-mode" value="cards" /> Cartes
+        </label>
+        <label>
+          <input type="radio" name="display-mode" value="csv" /> CSV
+        </label>
+      </fieldset>
       <button onClick={addNewPerson}>Nouvelle personne</button>
-      <table>
-        <thead>
-          <tr>
-            <th>Prénom</th>
-            <th>Nom</th>
-          </tr>
-        </thead>
-        <tbody>
-          {persons.map((person) => {
-            return (
-              <tr key={person.login.uuid}>
-                <td>{person.name.first}</td>
-                <td>{person.name.last}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div className="Card-grid">
+        {persons.map((person) => {
+          return (
+            <PersonCard
+              key={person.login.uuid}
+              id={person.login.uuid}
+              firstName={person.name.first}
+              lastName={person.name.last}
+              gender={person.gender}
+              dateOfBirth={person.dob.date}
+              imageUrl={person.picture.large}
+              onDelete={deletePerson}
+            />
+          );
+        })}
+      </div>
     </>
   );
 };
